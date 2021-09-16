@@ -7,7 +7,7 @@ cmd="$*"
 
 postgres_ready () {
   # Check that postgres is up:
-  dockerize -wait tcp://db:5432 -timeout 5s
+  dockerize -wait tcp://db_warehouse:5433 -timeout 5s
 }
 
 web_ready () {

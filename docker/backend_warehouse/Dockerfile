@@ -1,4 +1,4 @@
-FROM python:latest as python_base
+FROM python:latest
 
 ARG DJANGO_ENV
 
@@ -20,16 +20,6 @@ ENV DJANGO_ENV=${DJANGO_ENV} \
 
 RUN apt-get update
 
-# Install system dependencies
-#RUN apt-get -y install
-#    libpq-dev \
-#    python-dev
-
-# Install python dependencies
-RUN pip install -U --no-cache-dir pip \
-    && pip install --no-cache-dir pipenv
-
-# Copy only requirements, to cache them in docker layer:
 WORKDIR /pysetup
 
 COPY ./warehouse_api/requirements.txt .
@@ -50,4 +40,3 @@ RUN chmod +x /docker-entrypoint.sh /wait-for-command.sh /runserver.sh
 WORKDIR /code
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-#ENTRYPOINT ["/runserver.sh"]

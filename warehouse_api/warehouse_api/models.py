@@ -87,7 +87,7 @@ class Order(LifecycleModelMixin, models.Model):
     #         fail_silently=False  # Set this to False so that you will be noticed in any exception raised
     #     )
     #
-    #     url = 'http://shop:8001/store/orders_api/'
+    #     url = 'http://store:8000/store/orders_api/'
     #     requests.post(url=url, json={'id': f'{self.id}', 'status': 4})
     #
     # @hook(AFTER_UPDATE, when='status', changes_to=4)
@@ -101,7 +101,7 @@ class Order(LifecycleModelMixin, models.Model):
     #         recipient_list=[f'{self.customer_mail}'],  # This is a list
     #         fail_silently=False  # Set this to False so that you will be noticed in any exception raised
     #     )
-    #     url = 'http://shop:8001/store/orders_api/'
+    #     url = 'http://store:8000/store/orders_api/'
     #     requests.post(url=url, json={'id': f'{self.id}', 'status': 5})
 
 

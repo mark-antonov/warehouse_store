@@ -87,11 +87,11 @@ DATABASES = {
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'dbshop',
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'dbstore',
 #         'USER': 'postgres',
 #         'PASSWORD': 'postgdb',
-#         'HOST': 'db',
+#         'HOST': 'db_store',
 #         'PORT': '5432',
 #     }
 # }

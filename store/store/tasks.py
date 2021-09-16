@@ -14,7 +14,7 @@ def contact_us_send_mail(subject, message, from_email, recipient_list):
 
 @shared_task
 def book_sync():
-    url = 'http://warehouse:8002/books'
+    url = 'http://warehouse:8001/books'
     response = requests.get(url=url).json()
 
     for counter, book in enumerate(response):
