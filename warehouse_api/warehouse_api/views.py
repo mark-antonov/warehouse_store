@@ -1,8 +1,8 @@
 from rest_framework import viewsets
 
 from .models import Author, Book, BookInstance, Genre, Order, OrderItem
-from .serializers import AuthorSerializer, BookSerializer, BookInstanceSerializer, GenreSerializer, OrderSerializer
-from .serializers import OrderItemSerializer
+from .serializers import AuthorSerializer, BookInstanceSerializer, BookSerializer, GenreSerializer, OrderItemSerializer
+from .serializers import OrderSerializer
 
 
 class AuthorViewSet(viewsets.ModelViewSet):

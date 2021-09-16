@@ -1,0 +1,41 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+    <h3>Ordered by genre "{{ genre.name }}"</h3>
+
+    <label>
+        <select class='form-control' size="1" name="jumpit" onchange="document.location.href=this.value">
+
+            <option selected value="">{{ genre.name }}</option>
+            <option value="{% url 'index' %}">All</option>
+            {% for genre in genre_list %}
+                <option value="{% url 'genre-detail' genre.id %}">{{ genre.name }}</option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <h3>Books:</h3>
+    <ul>
+        <div class='jumbotron'>
+            {% for book in page_obj %}
+                <li><h4><a class="p-2 text-dark" href="{% url 'book-detail' book.id %}">{{ book.title }}</a></h4>
+                    {% for author in book.author.all %}
+                        <p class="card-text text-muted h6">{{ author.name }}</p>
+                        {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                    <h5>{{ book.summary|slice:":150" }}...</h5></li>
+                <h5>Price: {{ book.price }} UAH, rating {{ book.mark }}</h5>
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'add_to_order' book.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-success" type="submit">Add to cart</button>
+                    </form>
+                {% endif %}
+                <hr>
+            {% empty %}
+                <h5>Sorry, but there are no books in this genre yet.</h5>
+            {% endfor %}
+        </div>
+    </ul>
+{% endblock %}

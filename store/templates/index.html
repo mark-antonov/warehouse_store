@@ -1,7 +1,35 @@
-{% extends 'base_generic.html' %}
-
-{% block title %}Book store{% endblock %}
-
+{% extends "base_generic.html" %}
+{% load static %}
 {% block content %}
-    <h1>Welcome to our book store!</h1>
+
+    <h3>Choose ordering by genre: </h3>
+    <label>
+        <select class='form-control' size="1" name="jumpit" onchange="document.location.href=this.value">
+            <option selected value="{% url 'index' %}">All</option>
+            {% for genre in genre_list %}
+                <option value="{% url 'genre-detail' genre.id %}">{{ genre.name }}</option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <div class="container">
+        <div class="row">
+            <!-- Blog Entries Column -->
+            <div class="col-md-8 mt-3 left">
+                {% for book in book_list %}
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ book.title }}</h2>
+                             {% for author in book.author.all %}
+                                <p class="card-text text-muted h6">{{ author.name }}</p>
+                                {% if not forloop.last %}, {% endif %}</a>
+                            {% endfor %}
+                            <p class="card-text">{{ book.summary|slice:":150" }}</p>
+                            <a href="{% url 'book-detail' book.id %}" class="btn btn-primary">Read More &rarr;</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

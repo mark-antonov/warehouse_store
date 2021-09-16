@@ -1,0 +1,26 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 card mb-4  mt-3">
+                <div class="card-body">
+                    <h1>{{ object.title }}</h1>
+                    {% for author in book.author.all %}
+                        <p class="card-text text-muted h6">{{ author.name }}</p>
+                        {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                    <p></p>
+                    <p class="card-text ">{{ object.summary | safe }}</p>
+                    <p class="card-text ">{{ object.price }} UAH, rating: {{ object.mark }}</p>
+                    <p></p>
+                    {% if user.is_authenticated %}
+                        <form method="post" action="{% url 'add_to_order' book.id %}">
+                            {% csrf_token %}
+                            <button class="btn btn-success" type="submit">Add to cart</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

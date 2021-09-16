@@ -1,7 +1,11 @@
 import uuid
 
+# import requests
+# from django.core.mail import send_mail
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+
+from django_lifecycle import LifecycleModelMixin  # hook, AFTER_UPDATE
 
 
 class Author(models.Model):
@@ -51,7 +55,7 @@ class Book(models.Model):
     display_genre.short_description = 'Genres'
 
 
-class Order(models.Model):
+class Order(LifecycleModelMixin, models.Model):
     class OrderStatus(models.IntegerChoices):
         WAITING = 1, 'Waiting'
         IN_PROGRESS = 2, 'In progress'
@@ -72,6 +76,33 @@ class Order(models.Model):
 
     def __str__(self):
         return f'{self.id}'
+
+    # @hook(AFTER_UPDATE, when='status', changes_to=3)
+    # def order_status_done_email(self):
+    #     send_mail(
+    #         subject="Your order was Done",
+    #         message="Your order was Done",
+    #         from_email="admin@admin.com", This will have no effect is you have set DEFAULT_FROM_EMAIL in settings.py
+    #         recipient_list=[f'{self.customer_mail}', ],  # This is a list
+    #         fail_silently=False  # Set this to False so that you will be noticed in any exception raised
+    #     )
+    #
+    #     url = 'http://shop:8001/store/orders_api/'
+    #     requests.post(url=url, json={'id': f'{self.id}', 'status': 4})
+    #
+    # @hook(AFTER_UPDATE, when='status', changes_to=4)
+    # def order_status_rejected_email(self):
+    #     from django.core.mail import send_mail
+    #
+    #     send_mail(
+    #         subject="Your order was rejected",
+    #         message="Your order was rejected",
+    #         from_email="admin@admin.com",  This will have no effect is you have set DEFAULT_FROM_EMAIL in settings.py
+    #         recipient_list=[f'{self.customer_mail}'],  # This is a list
+    #         fail_silently=False  # Set this to False so that you will be noticed in any exception raised
+    #     )
+    #     url = 'http://shop:8001/store/orders_api/'
+    #     requests.post(url=url, json={'id': f'{self.id}', 'status': 5})
 
 
 class OrderItem(models.Model):

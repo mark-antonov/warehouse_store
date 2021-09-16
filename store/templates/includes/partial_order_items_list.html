@@ -1,0 +1,29 @@
+{% for item in order_items %}
+    <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.book.title }}</td>
+        {% for author in item.book.author.all %}
+            <td>{{ author.name }}</td>
+            {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+        <td>{{ item.book.price }}</td>
+        <td>{{ item.book.mark }}</td>
+        <td>{{ item.quantity }}</td>
+        <td style="width: 150px">
+            <button type="button"
+                    class="btn btn-warning btn-sm js-update-order"
+                    data-url="{% url 'order_update' item.id %}">
+                <span class="glyphicon glyphicon-pencil"></span> Edit
+            </button>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-order_item"
+                    data-url="{% url 'order_item_delete' item.id %}">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="8" class="text-center bg-warning">No books</td>
+    </tr>
+{% endfor %}

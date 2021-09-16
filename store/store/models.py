@@ -64,7 +64,7 @@ class Order(models.Model):
         primary_key=True, default=uuid.uuid4, help_text='Unique ID for this order across whole store'
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    order_date = models.DateField(help_text='Date when order was created')
+    order_date = models.DateField(help_text='Date when order was created', null=True, blank=True)
     shipped_date = models.DateField(null=True, blank=True, help_text='Date when order moved to Done status')
     status = models.PositiveSmallIntegerField(
         choices=OrderStatus.choices, default=OrderStatus.WAITING, help_text='Order status'

@@ -1,0 +1,44 @@
+{% extends 'base_generic.html' %}
+
+{% load static %}
+
+{% block extra_js %}
+    <script src="{% static 'js/order.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <h1 class="page-header">Order Items</h1>
+    {#    <p>#}
+    {#    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'order_send' %}">#}
+    {#      <span class="glyphicon glyphicon-plus"></span>#}
+    {#      Send order#}
+    {#    </button>#}
+    {#  </p>#}
+    <form method="post" action="{% url 'order_send' %}">
+        {% csrf_token %}
+        <button class="btn btn-success" type="submit">Send order</button>
+    </form>
+    <table class="table" id="order-table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Rating</th>
+            <th>Quantity</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% include 'includes/partial_order_items_list.html' %}
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="modal-order">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+{% endblock %}
