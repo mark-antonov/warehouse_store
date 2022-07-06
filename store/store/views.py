@@ -50,8 +50,7 @@ class UpdateProfileView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_message = 'Profile updated'
 
     def get_object(self, queryset=None):
-        user = self.request.user
-        return user
+        return self.request.user
 
 
 @method_decorator(cache_page(5), name='dispatch')
@@ -96,7 +95,7 @@ class BookDetailView(SuccessMessageMixin, DetailView):
 
 
 def contact_form(request):
-    data = dict()
+    data = {}
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -126,12 +125,12 @@ def add_to_order(request, pk):
         book_order_item.quantity += 1
         book_order_item.save()
         messages.success(request, "Item already in cart! We added increased books quantity to +1")
-        return redirect('index')
-        # return reverse_lazy('index')
+            # return reverse_lazy('index')
     else:
         OrderItem.objects.create(order=order, book=book)
         messages.success(request, "Item added to the cart!")
-        return redirect('index')
+
+    return redirect('index')
         # return reverse_lazy('index')
 
 
@@ -146,7 +145,7 @@ def order_items_list(request):
 
 
 def save_order_item_form(request, form, template_name):
-    data = dict()
+    data = {}
     if request.method == 'POST':
         if form.is_valid():
             form.save()
@@ -174,7 +173,7 @@ def order_item_update(request, pk):
 
 def order_items_delete(request, pk):
     order_item = get_object_or_404(OrderItem, pk=pk)
-    data = dict()
+    data = {}
     if request.method == 'POST':
         order_item.delete()
         data['form_is_valid'] = True

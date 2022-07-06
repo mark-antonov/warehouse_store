@@ -17,10 +17,8 @@ def book_sync():
     url = 'http://warehouse:8001/books'
     response = requests.get(url=url).json()
 
-    for counter, book in enumerate(response):
-        if Book.objects.filter(id=book['id']).exists():
-            continue
-        else:
+    for book in response:
+        if not Book.objects.filter(id=book['id']).exists():
             genre_list = []
 
             for genre_resp in book['genre']:
